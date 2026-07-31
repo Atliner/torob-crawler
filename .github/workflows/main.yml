@@ -1,0 +1,27 @@
+name: Run Price Crawler
+
+on:
+  schedule:
+    # این دستور یعنی ربات هر ۶ ساعت یک‌بار خودکار اجرا شود
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # این دکمه به شما اجازه می‌دهد هر زمان خواستید دستی هم ربات را روشن کنید
+
+jobs:
+  run-crawler:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -minstall --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Crawler Script
+      run: python crawler.py
